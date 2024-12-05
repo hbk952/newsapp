@@ -1,23 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Switch, Route, Routes} from "react-router-dom";
+import Home from './pages/home';
+import Contact from './pages/contact';
+import About from './pages/about';
+import Headlines from './components/Headlines';
+import News from './components/News';
+import Subscription from './pages/subscription';
 
 function App() {
+  const pageSize = 5;
+  const apiKey = process.env.REACT_APP_NEWS_API
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Headlines pageSize={pageSize} apiKey={apiKey} />} />
+          <Route path="/others" element={<News pageSize={pageSize} apiKey={apiKey} />} />
+          <Route path="/sports" element={<News pageSize={pageSize} apiKey={apiKey} category="sports" />} />
+          <Route path="/science" element={<News pageSize={pageSize} apiKey={apiKey} category="science" />} />
+          <Route path="/health" element={<News pageSize={pageSize} apiKey={apiKey} category="health" />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/subscription" element={<Subscription />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
